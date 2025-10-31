@@ -1191,7 +1191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreActions
   player: {fileID: 0}
-  storeType: 0
+  storeType: 1
   healthyFood: {fileID: 8190844599580566110, guid: 7e1ad7af875232f49a19aac465b3a7c0, type: 3}
   fastFood: {fileID: 8649674295557424947, guid: f32b8e77c0cb1864da604347c51d073d, type: 3}
 --- !u!4 &9035519815357488957 stripped
