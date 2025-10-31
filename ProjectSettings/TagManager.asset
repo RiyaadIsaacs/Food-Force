@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Store
+  - Beggar
   layers:
   - Default
   - TransparentFX

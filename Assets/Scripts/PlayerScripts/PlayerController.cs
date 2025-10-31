@@ -1,7 +1,9 @@
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody))]
@@ -30,7 +32,9 @@ public class PlayerController : MonoBehaviour
     // Stats component
     private PlayerStats stats;
 
+    // references to other objects
     private StoreActions currentStore;
+    private BeggarActions currentBeggar;
 
     private bool jumpRequested;
     private bool isGrounded;
@@ -140,6 +144,27 @@ public class PlayerController : MonoBehaviour
             interactAction.Disable(); // Prevent multiple purchases in one press
             interactAction.Enable();
         }
+        if (interactAction != null && interactAction.WasPressedThisFrame())
+        {
+            if (currentStore != null && !stats.IsInventoryFull())
+            {
+                currentStore.BuyFood();
+            }
+            else if (currentBeggar != null)
+            {
+                GameObject item = stats.RemoveFirstFoodItem();
+                if (item != null)
+                {
+                    currentBeggar.Eat(item);
+                }
+                else
+                {
+                    Debug.Log("No item in inventory to give to beggar.");
+                }
+            }
+        }
+
+
 
         // Set Walking bool
         animator.SetBool("isWalking", moveAction.ReadValue<Vector2>().y > 0);
@@ -166,12 +191,18 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Entered store trigger");
             currentStore = other.gameObject.GetComponent<StoreActions>();
         }
+
+        if (other.gameObject.CompareTag("Beggar"))
+        {
+            Debug.Log("Entered beggar trigger");
+            currentBeggar = other.gameObject.GetComponent<BeggarActions>();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exited store trigger");
         currentStore = null;
+        currentBeggar = null;
     }
 
     private void OnInteractPerformed(InputAction.CallbackContext ctx)

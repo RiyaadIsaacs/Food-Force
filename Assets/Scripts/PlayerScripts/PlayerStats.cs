@@ -12,6 +12,7 @@ public class PlayerStats : MonoBehaviour
     public int Level => level;
     public int CarryWeight => carryWeight;
     public int Money => money;
+    public GameObject[] Inventory => inventory;
 
     // Player movement speed and jump, adjustable in the inspector
     [SerializeField] private float moveSpeed = 5f;
@@ -65,5 +66,24 @@ public class PlayerStats : MonoBehaviour
                 break;
             }
         }
+    }
+
+    // Removes and returns the first inventory GameObject that has a Food component.
+    public GameObject RemoveFirstFoodItem()
+    {
+        if (inventory == null || inventory.Length == 0)
+            return null;
+
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            var item = inventory[i];
+            if (item != null && item.GetComponent<Food>() != null)
+            {
+                inventory[i] = null; // remove from inventory
+                return item;
+            }
+        }
+
+        return null;
     }
 }
