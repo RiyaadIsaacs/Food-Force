@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isRunning", moveAction.ReadValue<Vector2>().y > 0 && sprintAction.ReadValue<float>() > 0);
 
         // Set giveItem bool
-        animator.SetBool("giveItem", interactAction.ReadValue<bool>());
+        animator.SetBool("giveItem", interactAction != null && interactAction.IsPressed());
     }
 
     private void OnCollisionEnter(Collision collision)

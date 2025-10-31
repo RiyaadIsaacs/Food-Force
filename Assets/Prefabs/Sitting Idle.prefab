@@ -138,6 +138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 341457062863858409}
+  - component: {fileID: 4045472014491145304}
   m_Layer: 0
   m_Name: Sitting Idle
   m_TagString: Untagged
@@ -162,6 +163,28 @@ Transform:
   - {fileID: 464872063943680111}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -189.133, z: 0}
+--- !u!95 &4045472014491145304
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150328646284357715}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d45bb410d54f4714e82d186d8674980d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1270808226002270959
 GameObject:
   m_ObjectHideFlags: 0
