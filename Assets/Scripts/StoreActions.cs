@@ -4,6 +4,8 @@ public class StoreActions : MonoBehaviour
 {
     [SerializeField] private PlayerStats player;
     [SerializeField] private StoreType storeType;
+    [SerializeField] private GameObject healthyFood;
+    [SerializeField] private GameObject fastFood;
 
     public void BuyFood()
     {
@@ -13,6 +15,7 @@ public class StoreActions : MonoBehaviour
         if (player != null && player.Money >= foodCost)
         {
             player.DeductMoney(foodCost);
+            player.AddFood(storeType == StoreType.HealthyFood ? healthyFood : fastFood);
             Debug.Log($"Purchased food for {foodCost} from {storeType} store.");
         }
         else

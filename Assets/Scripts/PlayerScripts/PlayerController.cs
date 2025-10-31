@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     // Singleton instance
     public static PlayerController Instance { get; private set; }
 
-
     [SerializeField] private float jumpForce = 5f;
 
     // Camera to use for camera-relative movement
@@ -75,16 +74,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-            jumpAction.performed += OnJumpPerformed;
 
-            interactAction.performed += OnInteractPerformed;
+        jumpAction.performed += OnJumpPerformed;
+
+        interactAction.performed += OnInteractPerformed;
     }
 
     private void OnDisable()
     {
-            jumpAction.performed -= OnJumpPerformed;
+        jumpAction.performed -= OnJumpPerformed;
 
-            interactAction.performed -= OnInteractPerformed;
+        interactAction.performed -= OnInteractPerformed;
     }
 
     private void FixedUpdate()
@@ -130,9 +130,10 @@ public class PlayerController : MonoBehaviour
             jumpRequested = false;
         }
         
-        if (interactAction.IsPressed() && currentStore != null)
+        if (interactAction.IsPressed() && currentStore != null && !stats.IsInventoryFull())
         {
             currentStore.BuyFood();
+
             interactAction.Disable(); // Prevent multiple purchases in one press
             interactAction.Enable();
         }
@@ -144,12 +145,6 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            isGrounded = false;
     }
 
     private void OnTriggerEnter(Collider other)

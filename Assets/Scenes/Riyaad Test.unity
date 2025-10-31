@@ -1894,6 +1894,7 @@ MonoBehaviour:
   level: 1
   carryWeight: 5
   money: 1500
+  inventory: []
   moveSpeed: 5
   sprintSpeed: 10
 --- !u!114 &187500309
@@ -18684,31 +18685,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -190.39375
+      value: -161.40228
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0020392085
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -61.00517
+      value: -39.180626
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99633676
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.085516565
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -18716,7 +18717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 9.811
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4513882500485318432, guid: 4dd2059695e3b7643a2042cfdfada3b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -18773,6 +18774,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoreActions
   player: {fileID: 187500308}
   storeType: 0
+  healthyFood: {fileID: 8190844599580566110, guid: 7e1ad7af875232f49a19aac465b3a7c0, type: 3}
+  fastFood: {fileID: 8649674295557424947, guid: f32b8e77c0cb1864da604347c51d073d, type: 3}
 --- !u!43 &1824846210
 Mesh:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int level = 1;
     [SerializeField] private int carryWeight = 5;
     [SerializeField] private int money = 500;
+    [SerializeField] private GameObject[] inventory;
 
     public int Level => level;
     public int CarryWeight => carryWeight;
@@ -19,7 +20,12 @@ public class PlayerStats : MonoBehaviour
     public float BaseMoveSpeed => moveSpeed;
     public float SprintSpeed => sprintSpeed;
 
-    public void DeductMoney( int foodCost)
+    private void Awake()
+    {
+        inventory = new GameObject[carryWeight];
+    }
+
+    public void DeductMoney(int foodCost)
     {
         if (foodCost < 0)
             throw new ArgumentOutOfRangeException(nameof(foodCost), "Cost cannot be negative.");
@@ -33,4 +39,31 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void AddMoney(int amount)
+    {
+        if (amount < 0)
+            throw new ArgumentOutOfRangeException(nameof(amount), "Amount to add cannot be negative.");
+        money += amount;
+    }
+
+    public bool IsInventoryFull()
+    {
+        for (int i = 0; i < inventory.Length; i++)
+            if (inventory[i] == null)
+                return false;
+
+        return inventory.Length > 0; // if length == 0 treat as full
+    }
+
+    public void AddFood(GameObject food) 
+    {
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (inventory[i] == null)
+            {
+                inventory[i] = food;
+                break;
+            }
+        }
+    }
 }
