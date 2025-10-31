@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jumpRequested = false;
         }
-        
+
         if (interactAction.IsPressed() && currentStore != null && !stats.IsInventoryFull())
         {
             currentStore.BuyFood();
@@ -144,23 +144,19 @@ public class PlayerController : MonoBehaviour
             interactAction.Disable(); // Prevent multiple purchases in one press
             interactAction.Enable();
         }
-        if (interactAction != null && interactAction.WasPressedThisFrame())
+
+        else if (interactAction.IsPressed() && currentBeggar != null)
         {
-            if (currentStore != null && !stats.IsInventoryFull())
+            GameObject item = stats.RemoveFirstFoodItem();
+            if (item != null)
             {
-                currentStore.BuyFood();
+                currentBeggar.Eat(item);
+                interactAction.Disable(); // Prevent multiple purchases in one press
+                interactAction.Enable();
             }
-            else if (currentBeggar != null)
+            else
             {
-                GameObject item = stats.RemoveFirstFoodItem();
-                if (item != null)
-                {
-                    currentBeggar.Eat(item);
-                }
-                else
-                {
-                    Debug.Log("No item in inventory to give to beggar.");
-                }
+                Debug.Log("No item in inventory to give to beggar.");
             }
         }
 
