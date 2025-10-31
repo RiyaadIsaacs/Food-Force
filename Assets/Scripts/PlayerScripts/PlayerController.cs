@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction sprintAction;
     private InputAction interactAction;
+
+    public Animator animator;
 
     private Rigidbody rb;
 
@@ -137,6 +140,15 @@ public class PlayerController : MonoBehaviour
             interactAction.Disable(); // Prevent multiple purchases in one press
             interactAction.Enable();
         }
+
+        // Set Walking bool
+        animator.SetBool("isWalking", moveAction.ReadValue<Vector2>().y > 0);
+
+        // Set Running bool
+        animator.SetBool("isRunning", moveAction.ReadValue<Vector2>().y > 0 && sprintAction.ReadValue<float>() > 0);
+
+        // Set giveItem bool
+        animator.SetBool("giveItem", interactAction.ReadValue<bool>());
     }
 
     private void OnCollisionEnter(Collision collision)
