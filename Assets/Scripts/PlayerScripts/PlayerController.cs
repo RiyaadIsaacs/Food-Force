@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     // Singleton instance
     public static PlayerController Instance { get; private set; }
 
+    [SerializeField] private TMPro.TMP_Text interactionPopUp;
+
     [SerializeField] private float jumpForce = 5f;
 
     // Camera to use for camera-relative movement
@@ -72,6 +74,8 @@ public class PlayerController : MonoBehaviour
             if (c != null) cameraTransform = c.transform;
             else if (Camera.main != null) cameraTransform = Camera.main.transform;
         }
+
+        interactionPopUp.enabled = false;
     }
 
     private void OnDestroy()
@@ -182,6 +186,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        interactionPopUp.enabled = true;
+
         if (other.gameObject.CompareTag("Store"))
         {
             Debug.Log("Entered store trigger");
@@ -199,6 +205,7 @@ public class PlayerController : MonoBehaviour
     {
         currentStore = null;
         currentBeggar = null;
+        interactionPopUp.enabled = false;
     }
 
     private void OnInteractPerformed(InputAction.CallbackContext ctx)
