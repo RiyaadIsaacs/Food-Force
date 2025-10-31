@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction sprintAction;
     private InputAction interactAction;
+    private InputAction pauseAction;
 
     public Animator animator;
 
@@ -40,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     private bool jumpRequested;
     private bool isGrounded;
+
+    public PauseManager pauseManager;
 
     private void Awake()
     {
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
         jumpAction = playerInput?.actions.FindAction("Jump", false);
         sprintAction = playerInput?.actions.FindAction("Sprint", false);
         interactAction = playerInput?.actions.FindAction("Interact", false);
+        pauseAction = playerInput?.actions.FindAction("Pause", false);
         rb = GetComponent<Rigidbody>();
 
         // Cache stats (optional component on same GameObject)
@@ -75,7 +79,8 @@ public class PlayerController : MonoBehaviour
             else if (Camera.main != null) cameraTransform = Camera.main.transform;
         }
 
-        interactionPopUp.enabled = false;
+        if (interactionPopUp != null)
+            interactionPopUp.enabled = false; 
     }
 
     private void OnDestroy()
@@ -164,6 +169,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (pauseAction.IsPressed())
+        {
+            pauseManager.PauseGame();
+        }
 
 
         // Set Walking bool

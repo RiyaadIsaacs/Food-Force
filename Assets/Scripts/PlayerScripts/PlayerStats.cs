@@ -9,6 +9,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int money = 500;
     [SerializeField] private GameObject[] inventory;
 
+    [SerializeField] private TMPro.TMP_Text moneyText;
+
     public int Level => level;
     public int CarryWeight => carryWeight;
     public int Money => money;
@@ -38,6 +40,7 @@ public class PlayerStats : MonoBehaviour
         {
             Debug.LogWarning("Not enough money to deduct.");
         }
+        moneyText.text = "Money available:" + money.ToString();
     }
 
     public void AddMoney(int amount)
@@ -45,6 +48,7 @@ public class PlayerStats : MonoBehaviour
         if (amount < 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "Amount to add cannot be negative.");
         money += amount;
+        moneyText.text = "Money available:" + money.ToString();
     }
 
     public bool IsInventoryFull()
