@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,10 +21,14 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
+    private InputAction interactAction;
+
     private Rigidbody rb;
 
     // Stats component
     private PlayerStats stats;
+
+    private StoreActions currentStore;
 
     private bool jumpRequested;
     private bool isGrounded;
@@ -43,6 +48,7 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput?.actions.FindAction("Move", false);
         jumpAction = playerInput?.actions.FindAction("Jump", false);
         sprintAction = playerInput?.actions.FindAction("Sprint", false);
+        interactAction = playerInput?.actions.FindAction("Interact", false);
         rb = GetComponent<Rigidbody>();
 
         // Cache stats (optional component on same GameObject)
@@ -50,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
         // Smooth physics-driven motion for camera-following
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+
         // Prevent physics from rotating the body on X/Z 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
@@ -68,24 +75,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (jumpAction != null)
             jumpAction.performed += OnJumpPerformed;
+
+            interactAction.performed += OnInteractPerformed;
     }
 
     private void OnDisable()
     {
-        if (jumpAction != null)
             jumpAction.performed -= OnJumpPerformed;
-    }
 
-    private void OnJumpPerformed(InputAction.CallbackContext ctx)
-    {
-        // prevent multiple jumps until the player hits the ground again
-        if (isGrounded)
-        {
-            jumpRequested = true;
-            isGrounded = false;
-        }
+            interactAction.performed -= OnInteractPerformed;
     }
 
     private void FixedUpdate()
@@ -130,6 +129,13 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jumpRequested = false;
         }
+        
+        if (interactAction.IsPressed() && currentStore != null)
+        {
+            currentStore.BuyFood();
+            interactAction.Disable(); // Prevent multiple purchases in one press
+            interactAction.Enable();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -144,5 +150,39 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Store"))
+        {
+            Debug.Log("Entered store trigger");
+            currentStore = other.gameObject.GetComponent<StoreActions>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Exited store trigger");
+        currentStore = null;
+    }
+
+    private void OnInteractPerformed(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("interacted called");
+        if (currentStore != null)
+        {
+            currentStore.BuyFood();
+        }
+    }
+
+    private void OnJumpPerformed(InputAction.CallbackContext ctx)
+    {
+        // prevent multiple jumps until the player hits the ground again
+        if (isGrounded)
+        {
+            jumpRequested = true;
+            isGrounded = false;
+        }
     }
 }
